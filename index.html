@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vite App</title>
+  </head>
+  <body>
+    <div id="app">
+      <button onclick="pay()">Pay</button>
+    </div>
+    <script type="module" src="/src/index.ts"></script>
+    <script>
+      function pay() {
+        reqnetic
+          .setup("pub-41c31d69-1dcc-4b2c-89b9-2c7e335df4bc")
+          .initializePayment({
+            tx_ref: "33222",
+            amount_in_wei: "400000000000000",
+            currency: "ETH",
+            customer_email: "yungdynamic53@gmail.com",
+            customer_name: "David",
+            title: "Payment for gas",
+            description: "description",
+          });
+      }
+    </script>
+  </body>
+</html>
