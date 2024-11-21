@@ -1,5 +1,5 @@
 {
-  "name": "@reqnetic/reqnetic",
+  "name": "@reqnetic/reqnify",
   "private": false,
   "license": "MIT",
   "version": "0.0.1",
@@ -26,7 +26,8 @@
     "format:styles": "stylelint ./**/*.{css,scss} --fix",
     "format": "npm run format:scripts && npm run format:styles",
     "prepare": "husky install && husky set .husky/pre-commit 'npx lint-staged' && git add .husky/pre-commit",
-    "uninstall-husky": "npm uninstall husky --no-save && git config --unset core.hooksPath && npx rimraf .husky"
+    "uninstall-husky": "npm uninstall husky --no-save && git config --unset core.hooksPath && npx rimraf .husky",
+    "publish": "npm run build && npm publish --access public"
   },
   "files": [
     "dist",

@@ -7,7 +7,7 @@ The Reqnetic SDK provides a convenient way to integrate the reqnetic Payment Sys
 To use the reqnetic SDK, you need to include the SDK script in your HTML file. You can either host the script locally or use a CDN. Here's an example of including the SDK using a CDN:
 
 ```
-npm install @reqnetic/reqnetic
+npm install @reqnetic/reqnify
 ```
 
 ### Initialization and Payment Creation
