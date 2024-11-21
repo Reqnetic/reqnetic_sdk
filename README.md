@@ -29,5 +29,5 @@ Reqnetic.setup("your-api-key").initializePayment({
 The `tx_ref` represents the transaction reference, `amount_in_wei` is the payment amount in wei, `currency` indicates the currency (e.g., "ETH"), `customer_email` and `customer_name` are the customer's email address and name, respectively. The `title` and `description` fields provide additional information about the payment.
 
 Refer to the reqnetic SDK documentation for more details on events and their usage
-# reqnetic_sdk
+
 # reqnetic_sdk
