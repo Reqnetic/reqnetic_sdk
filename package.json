@@ -7,12 +7,12 @@
     "type": "git",
     "url": "git@github.com:Reqnetic/reqnetic_sdk.git"
   },
-  "main": "./dist/reqnetic.cjs",
-  "module": "./dist/reqnetic.mjs",
+  "main": "./dist/reqnify.cjs",
+  "module": "./dist/reqnify.mjs",
   "exports": {
     ".": {
-      "require": "./dist/reqnetic.cjs",
-      "import": "./dist/reqnetic.mjs"
+      "require": "./dist/reqnify.cjs",
+      "import": "./dist/reqnify.mjs"
     }
   },
   "scripts": {
