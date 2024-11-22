@@ -1,5 +1,10 @@
 import { OrderPayload } from "./OrderPayload";
 import { localUrl } from "./urls";
+import { Types, Utils } from "@requestnetwork/request-client.js";
+import { EthereumPrivateKeySignatureProvider } from "@requestnetwork/epk-signature";
+import { providers } from "ethers";
+import { RequestNetwork } from "@requestnetwork/request-client.js";
+import { payRequest } from "@requestnetwork/payment-processor";
 
 export class Reqnetic {
   public api_key: string;
@@ -24,6 +29,34 @@ export class Reqnetic {
       });
 
       const resp = await response.json();
+
+      const requestClient = new RequestNetwork({
+        nodeConnectionConfig: {
+          baseURL: "https://sepolia.gateway.request.network/",
+        },
+      });
+
+      const request = await requestClient.fromRequestId(resp.request_id);
+
+      const requestData = request.inMemoryInfo!.requestData;
+
+      const provider = new providers.Web3Provider((window as any).ethereum); //TODO: fix this
+      // switch to correct network
+      await provider.send("wallet_switchEthereumChain", [{ chainId: "0x1" }]);
+
+      const paymentTx = await payRequest(requestData, provider.getSigner());
+      await paymentTx.wait();
+
+      // Step 5: Persist transaction
+
+      // We have to create a new Request Network Instance that can persist the request.
+      const requestNetworkWithPersistence = new RequestNetwork({
+        nodeConnectionConfig: {
+          baseURL: "https://sepolia.gateway.request.network",
+        },
+      });
+
+      await requestNetworkWithPersistence.persistRequest(requestData);
 
       this.removeLoading();
       return resp.url;
