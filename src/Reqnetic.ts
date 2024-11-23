@@ -42,7 +42,31 @@ export class Reqnetic {
 
       const provider = new providers.Web3Provider((window as any).ethereum); //TODO: fix this
       // switch to correct network
-      await provider.send("wallet_switchEthereumChain", [{ chainId: "0x1" }]);
+      try {
+        await provider.send("wallet_switchEthereumChain", [
+          { chainId: "0xaa36a7" },
+        ]);
+      } catch (error) {
+        await provider.send("wallet_addEthereumChain", [
+          {
+            chainId: "0xaa36a7",
+            chainName: "Sepolia",
+            nativeCurrency: {
+              name: "Sepolia",
+              symbol: "ETH",
+              decimals: 18,
+            },
+            rpcUrls: [
+              `https://sepolia.infura.io/v3/53163c736f1d4ba78f0a39ffda8d87b4`,
+            ],
+            blockExplorerUrls: ["https://sepolia.etherscan.io"],
+          },
+        ]);
+
+        await provider.send("wallet_switchEthereumChain", [
+          { chainId: "0xaa36a7" },
+        ]);
+      }
 
       const paymentTx = await payRequest(requestData, provider.getSigner());
       await paymentTx.wait();
@@ -56,7 +80,7 @@ export class Reqnetic {
         },
       });
 
-      await requestNetworkWithPersistence.persistRequest(requestData);
+      await requestNetworkWithPersistence.persistRequest(requestData as any); //TODO:
 
       this.removeLoading();
       return resp.url;
