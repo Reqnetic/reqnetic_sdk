@@ -36,9 +36,7 @@
   ],
   "dependencies": {
     "@ethersproject/providers": "^5.7.2",
-    "@requestnetwork/payment-processor": "^0.48.0",
-    "@requestnetwork/request-client.js": "^0.50.0-next.1892",
-    "@requestnetwork/web3-signature": "^0.8.1-next.1892"
+    "ethers": "5.7.2"
   },
   "devDependencies": {
     "@types/jsdom": "^20.0.1",
