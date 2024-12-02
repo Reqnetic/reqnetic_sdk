@@ -68,14 +68,7 @@ export class Reqnetic {
       const paymentTx = await payRequest(requestData, provider.getSigner());
       await paymentTx.wait();
 
-      // // We have to create a new Request Network Instance that can persist the request.
-      const requestNetworkWithPersistence = new RequestNetwork({
-        nodeConnectionConfig: {
-          baseURL: "https://sepolia.gateway.request.network",
-        },
-      });
-
-      await requestNetworkWithPersistence.persistRequest(request);
+      await requestClient.persistRequest(request);
 
       this.removeLoading();
       return resp.url;
