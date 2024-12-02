@@ -2,7 +2,7 @@ import { OrderPayload } from "./OrderPayload";
 import { localUrl } from "./urls";
 import { providers } from "ethers";
 import { RequestNetwork } from "@requestnetwork/request-client.js";
-// import { payRequest } from "@requestnetwork/payment-processor";
+import { payRequest } from "@requestnetwork/payment-processor";
 
 export class Reqnetic {
   public api_key: string;
@@ -28,18 +28,15 @@ export class Reqnetic {
 
       const resp = await response.json();
 
-      // const requestClient = new RequestNetwork({
-      //   nodeConnectionConfig: {
-      //     baseURL: "https://sepolia.gateway.request.network/",
-      //   },
-      // });
+      const requestClient = new RequestNetwork({
+        nodeConnectionConfig: {
+          baseURL: "https://sepolia.gateway.request.network/",
+        },
+      });
 
-      // const request = await requestClient.fromRequestId(resp.request_id);
+      const request = await requestClient.fromRequestId(resp.request_id);
 
-      // const requestData = request.inMemoryInfo!.requestData;
-
-      const provider = new providers.Web3Provider((window as any).ethereum); //TODO: fix this
-      // switch to correct network
+      const provider = new providers.Web3Provider((window as any).ethereum);
       try {
         await provider.send("wallet_switchEthereumChain", [
           { chainId: "0xaa36a7" },
@@ -66,19 +63,19 @@ export class Reqnetic {
         ]);
       }
 
-      // // const paymentTx = await payRequest(requestData, provider.getSigner());
-      // // await paymentTx.wait();
+      const requestData = request.inMemoryInfo!.requestData;
 
-      // // Step 5: Persist transaction
+      const paymentTx = await payRequest(requestData, provider.getSigner());
+      await paymentTx.wait();
 
       // // We have to create a new Request Network Instance that can persist the request.
-      // const requestNetworkWithPersistence = new RequestNetwork({
-      //   nodeConnectionConfig: {
-      //     baseURL: "https://sepolia.gateway.request.network",
-      //   },
-      // });
+      const requestNetworkWithPersistence = new RequestNetwork({
+        nodeConnectionConfig: {
+          baseURL: "https://sepolia.gateway.request.network",
+        },
+      });
 
-      // await requestNetworkWithPersistence.persistRequest(requestData as any); //TODO:
+      await requestNetworkWithPersistence.persistRequest(request);
 
       this.removeLoading();
       return resp.url;
