@@ -2,7 +2,7 @@ import { OrderPayload } from "./OrderPayload";
 import { localUrl } from "./urls";
 import { providers } from "ethers";
 import { RequestNetwork } from "@requestnetwork/request-client.js";
-import { payRequest } from "@requestnetwork/payment-processor";
+// import { payRequest } from "@requestnetwork/payment-processor";
 
 export class Reqnetic {
   public api_key: string;
@@ -65,8 +65,8 @@ export class Reqnetic {
 
       const requestData = request.inMemoryInfo!.requestData;
 
-      const paymentTx = await payRequest(requestData, provider.getSigner());
-      await paymentTx.wait();
+      // const paymentTx = await payRequest(requestData, provider.getSigner());
+      // await paymentTx.wait();
 
       await requestClient.persistRequest(request);
 
