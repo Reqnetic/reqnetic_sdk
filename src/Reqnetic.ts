@@ -34,7 +34,7 @@ export class Reqnetic {
         },
       });
 
-      const request = await requestClient.fromRequestId(resp.request_id);
+      const requestData = resp.request_data;
 
       const provider = new providers.Web3Provider((window as any).ethereum);
       try {
@@ -63,12 +63,10 @@ export class Reqnetic {
         ]);
       }
 
-      const requestData = request.inMemoryInfo!.requestData;
-
       const paymentTx = await payRequest(requestData, provider.getSigner());
       await paymentTx.wait();
 
-      await requestClient.persistRequest(request);
+      await requestClient.persistRequest(resp.request);
 
       this.removeLoading();
       return resp.url;
