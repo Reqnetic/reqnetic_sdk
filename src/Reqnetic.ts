@@ -17,9 +17,6 @@ export class Reqnetic {
     this.displayLoading();
     let response;
     try {
-      console.log("1");
-      this.removeLoading();
-      return;
       response = await fetch((localUrl as string) + "/api/v1/sdk/order", {
         method: "POST",
         headers: {
@@ -30,24 +27,21 @@ export class Reqnetic {
       });
 
       const resp = await response.json();
-      console.log("2");
+
       const requestClient = new RequestNetwork({
         nodeConnectionConfig: {
           baseURL: "https://sepolia.gateway.request.network/",
         },
       });
-      console.log("3");
-
       const requestData = resp.request_data;
-      console.log("4");
+
       const provider = new providers.Web3Provider((window as any).ethereum);
-      console.log("5");
+
       console.log({ provider });
       try {
         await provider.send("wallet_switchEthereumChain", [
           { chainId: "0xaa36a7" },
         ]);
-        console.log("6");
       } catch (error) {
         await provider.send("wallet_addEthereumChain", [
           {
@@ -70,12 +64,9 @@ export class Reqnetic {
         ]);
       }
 
-      console.log("7");
-
       const paymentTx = await payRequest(requestData, provider.getSigner());
-      console.log("8");
+
       await paymentTx.wait();
-      console.log("9");
 
       await requestClient.persistRequest(resp.request);
 
