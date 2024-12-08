@@ -17,7 +17,7 @@ export class Reqnetic {
     this.displayLoading();
     let response;
     try {
-      response = await fetch((localUrl as string) + "/api/v1/sdk/order", {
+      response = await fetch((localUrl as string) + "/api/v1/sdk/orders", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
