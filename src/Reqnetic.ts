@@ -17,6 +17,9 @@ export class Reqnetic {
     this.displayLoading();
     let response;
     try {
+      console.log("1");
+      this.removeLoading();
+      return;
       response = await fetch((localUrl as string) + "/api/v1/sdk/order", {
         method: "POST",
         headers: {
@@ -25,8 +28,6 @@ export class Reqnetic {
         },
         body: JSON.stringify(data),
       });
-
-      console.log("1");
 
       const resp = await response.json();
       console.log("2");
