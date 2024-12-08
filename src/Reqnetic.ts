@@ -2,7 +2,7 @@ import { OrderPayload } from "./OrderPayload";
 import { localUrl } from "./urls";
 import { providers } from "ethers";
 import { RequestNetwork } from "@requestnetwork/request-client.js";
-import { payRequest } from "@requestnetwork/payment-processor";
+// import { payRequest } from "@requestnetwork/payment-processor";
 
 export class Reqnetic {
   public api_key: string;
@@ -33,7 +33,7 @@ export class Reqnetic {
           baseURL: "https://sepolia.gateway.request.network/",
         },
       });
-      const requestData = resp.request_data;
+      // const requestData = resp.request_data;
 
       const provider = new providers.Web3Provider((window as any).ethereum);
 
@@ -64,9 +64,9 @@ export class Reqnetic {
         ]);
       }
 
-      const paymentTx = await payRequest(requestData, provider.getSigner());
+      // const paymentTx = await payRequest(requestData, provider.getSigner());
 
-      await paymentTx.wait();
+      // await paymentTx.wait();
 
       await requestClient.persistRequest(resp.request);
 
