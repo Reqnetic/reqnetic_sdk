@@ -32,5 +32,9 @@ module.exports = defineConfig({
       formats,
       fileName: (format) => fileName[format],
     },
-  },
+  }, 
+  define: {
+    'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'production'),
+    'globalThis.process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'production'),
+  }
 });
